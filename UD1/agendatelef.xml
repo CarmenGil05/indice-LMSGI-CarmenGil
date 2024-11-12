@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="estilo-agenda.css"?>
+<agenda>
+    <persona>
+        <nombre>Pedro</nombre>
+        <apellidos>Fernández Garcia</apellidos>
+        <direccion>
+            <calle>Calle Moreno Fajardo</calle>
+            <numero>15</numero>
+            <ciudad>Sevilla</ciudad>
+            <codigoPostal>41234</codigoPostal>
+        </direccion>
+        <telefonos>
+            <telefono tipo="casa">942123456</telefono>
+            <telefono tipo="movil">678123456</telefono>
+            <telefono tipo="trabajo">942654321</telefono>
+        </telefonos>
+    </persona>
+    <persona>
+        <nombre>Pepito</nombre>
+        <apellidos>Grillo</apellidos>
+        <direccion>
+            <calle>Avd. El Pez</calle>
+            <numero>5</numero>
+            <ciudad>Suances</ciudad>
+            <codigoPostal>39401</codigoPostal>
+        </direccion>
+        <telefonos>
+            <telefono tipo="casa">942987654</telefono>
+            <telefono tipo="movil">656566555</telefono>
+        </telefonos>
+    </persona>
+</agenda>
