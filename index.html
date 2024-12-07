@@ -237,6 +237,29 @@ input[type="text"]:focus {
 *:hover {
     transition: all 0.3s ease;
 }
+nav {
+    
+    font-family: Arial, sans-serif; 
+}
+
+/* Estilo de los elementos dentro del nav */
+nav ul {
+    display: flex; 
+    justify-content: space-around; 
+    animation: aparecer 0.8s ease-out;
+    transition: all 0.3s ease;
+}
+
+nav ul li:hover {
+    background-color: #f8dcc3; /* Color de fondo al pasar el ratón */
+    color: #f17c0f; /* Color del texto en hover */
+}
+
+nav ul li a:hover {
+    background-color: #f8dcc3; /* Color de fondo al pasar el ratón */
+    color: #f17c0f; /* Color del texto en hover */
+}
+
     </style> 
 </head>
 <body>
@@ -312,10 +335,10 @@ Teléfono: <input type="text" name="tlf" size="25" maxlength="25"><br>
 </p>
 <h3 align="center">Selecciona el tipo de cine </h3>
 <p align="center">
-        <input type="submit" name="cine" value="accion">Acción
-        <input type="submit" name="cine" value="comedia">Comedia
-        <input type="submit" name="cine" value="cienciaficci-on">Ciencia-ficción
-        <input type="submit" name="cine" value="drama">Drama 
+        <input type="button" name="cine" value="accion">
+        <input type="button" name="cine" value="comedia">
+        <input type="checkbox" name="cine" value="cienciaficci-on">Ciencia-ficción
+        <input type="checkbox" name="cine" value="drama">Drama 
 </p>
 </form>
         </td>
