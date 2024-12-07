@@ -6,13 +6,6 @@
     <title>Index-CarmenGil</title>
     <style>
 /* Animaciones */
-/* Animaciones adicionales */
-@keyframes suaveFlotacion {
-    0% { transform: translateY(0) }
-    50% { transform: translateY(-5px) }
-    100% { transform: translateY(0) }
-}
-
 @keyframes aparecer {
     from { 
         opacity: 0;
@@ -77,19 +70,8 @@ header h1 {
     letter-spacing: 2px;
     font-weight: 600;
     position: relative;
-    animation: suaveFlotacion 3s ease-in-out infinite;
 }
-header h1::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: #E67E22;
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-}
+
 
 header h1:hover::after {
     width: 50%;
@@ -233,7 +215,7 @@ td {
 }
 
 input[type="text"] {
-    width: 100%;
+    width: 90%;
     padding: 12px 15px;
     border: 1px solid rgba(230, 126, 34, 0.3);
     border-radius: 8px;
@@ -303,7 +285,7 @@ input[type="text"]:focus {
             <td style= "background-color: #e3b375">
                 <form action="">
                     <p fontcolor="black">
-Nombre: <input type="text" name="nombre" size="25" maxlength="25"><br>
+Nombre: <input type="text" name="nombre" size="25" maxlength="25" ><br>
 Edad:  <input type="text" name="edad" size="25" maxlength="25"><br>
 Población: <input type="text" name="población" size="25" maxlength="25"><br>
 Dirección:  <input type="text" name="direc" size="25" maxlength="25"><br>
