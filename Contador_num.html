@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de números pares e impares</title>
+</head>
+<body>
+    <h1>Contador de números pares e impares</h1>
+    <p>Introduce números. La entrada termina cuando introduces 0 o un valor no numérico.</p>
+    <input type="text" id="numeroInput" placeholder="Introduce un número">
+    <button onclick="agregarNumero()">Agregar número</button>
+    <p id="resultado"></p>
+
+    <script>
+        let numeros = []; // Array para almacenar los números
+
+        function agregarNumero() {
+            // Obtener el valor del input
+            let input = document.getElementById('numeroInput').value.trim();
+            let numero = parseFloat(input);
+
+            // Verificar si el valor es un número válido y no es 0
+            if (isNaN(numero) || numero === 0) {
+                mostrarResultado(); // Si no es válido o es 0, terminar la entrada
+            } else {
+                numeros.push(numero); // Agregar el número al array
+                document.getElementById('numeroInput').value = ''; // Limpiar el input
+            }
+        }
+
+        function mostrarResultado() {
+            // Contar números pares e impares
+            let pares = numeros.filter(num => num % 2 === 0).length;
+            let impares = numeros.length - pares;
+
+            // Mostrar el resultado
+            document.getElementById('resultado').innerHTML = `
+                Array de entrada: [${numeros.join(', ')}]<br>
+                Números pares: ${pares}<br>
+                Números impares: ${impares}
+            `;
+        }
+    </script>
+</body>
+</html>
