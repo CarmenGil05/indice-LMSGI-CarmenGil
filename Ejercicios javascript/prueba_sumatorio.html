@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Vectores</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestor de Vectores</h1>
+        <div class="result" id="resultado">
+            <!-- Aquí se mostrarán los resultados -->
+        </div>
+    </div>
+
+    <script>
+        // Valores de prueba
+        const vector_prueba = [9, 11, 6];
+
+        // Calcular máximo
+        const maximo = Math.max(...vector_prueba);
+
+        // Calcular mínimo
+        const minimo = Math.min(...vector_prueba);
+
+        // Calcular sumatorio
+        const sumatorio = vector_prueba.reduce((acc, val) => acc + val, 0);
+
+        // Calcular multiplicación de valores
+        const multiplicacion = vector_prueba.reduce((acc, val) => acc * val, 1);
+
+        // Mostrar resultados en el HTML
+        document.getElementById('resultado').innerHTML = `
+            <p><strong>Datos de prueba:</strong> ${vector_prueba.join(', ')}</p>
+            <p><strong>Máximo:</strong> ${maximo}</p>
+            <p><strong>Mínimo:</strong> ${minimo}</p>
+            <p><strong>Sumatorio:</strong> ${sumatorio}</p>
+            <p><strong>Multiplicación de valores:</strong> ${multiplicacion}</p>
+        `;
+    </script>
+</body>
+</html>
+
