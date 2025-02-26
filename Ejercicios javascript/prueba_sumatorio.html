@@ -8,36 +8,95 @@
 <body>
     <div class="container">
         <h1>Gestor de Vectores</h1>
-        <div class="result" id="resultado">
-            <!-- Aquí se mostrarán los resultados -->
-        </div>
+        <input type="text" id="vectorInput" placeholder="Ingresa números separados por coma">
+        <button onclick="calcular()">Calcular</button>
+        <div class="result" id="resultado"></div>
     </div>
 
     <script>
-        // Valores de prueba
-        const vector_prueba = [9, 11, 6];
+        "use strict";
 
-        // Calcular máximo
-        const maximo = Math.max(...vector_prueba);
+        let gestor_vectores = {
+            vector_numeros: new Array(),
 
-        // Calcular mínimo
-        const minimo = Math.min(...vector_prueba);
+            setDatos: function (vector) {
+                this.vector_numeros = vector;
+            },
 
-        // Calcular sumatorio
-        const sumatorio = vector_prueba.reduce((acc, val) => acc + val, 0);
+            getMaximo: function () {
+                return Math.max(...this.vector_numeros);
+            },
 
-        // Calcular multiplicación de valores
-        const multiplicacion = vector_prueba.reduce((acc, val) => acc * val, 1);
+            getMinimo: function () {
+                return Math.min(...this.vector_numeros);
+            },
 
-        // Mostrar resultados en el HTML
-        document.getElementById('resultado').innerHTML = `
-            <p><strong>Datos de prueba:</strong> ${vector_prueba.join(', ')}</p>
-            <p><strong>Máximo:</strong> ${maximo}</p>
-            <p><strong>Mínimo:</strong> ${minimo}</p>
-            <p><strong>Sumatorio:</strong> ${sumatorio}</p>
-            <p><strong>Multiplicación de valores:</strong> ${multiplicacion}</p>
-        `;
+            getSumatorio: function () {
+                let suma = 0;
+                for (let pos in this.vector_numeros) {
+                    suma += this.vector_numeros[pos];
+                }
+                return suma;
+            },
+
+            getMultiplicacion: function () {
+                let producto = 1;
+                for (let pos in this.vector_numeros) {
+                    producto *= this.vector_numeros[pos];
+                }
+                return producto;
+            },
+
+            getPares: function () {
+                let pares = new Array();
+                for (let pos in this.vector_numeros) {
+                    if (this.vector_numeros[pos] % 2 === 0) {
+                        pares.push(this.vector_numeros[pos]);
+                    }
+                }
+                return pares;
+            },
+
+            getImpares: function () {
+                let impares = new Array();
+                for (let pos in this.vector_numeros) {
+                    if (this.vector_numeros[pos] % 2 !== 0) {
+                        impares.push(this.vector_numeros[pos]);
+                    }
+                }
+                return impares;
+            }
+        };
+
+        function calcular() {
+            let input = document.getElementById("vectorInput").value;
+            let vector = input.split(',').map(num => parseFloat(num.trim())).filter(num => !isNaN(num));
+
+            if (vector.length === 0) {
+                document.getElementById('resultado').innerHTML = "<p style='color:red;'>Por favor, ingresa valores numéricos válidos.</p>";
+                return;
+            }
+
+            gestor_vectores.setDatos(vector);
+
+    
+            let maximo = gestor_vectores.getMaximo();
+            let minimo = gestor_vectores.getMinimo();
+            let sumatorio = gestor_vectores.getSumatorio();
+            let multiplicacion = gestor_vectores.getMultiplicacion();
+            let pares = gestor_vectores.getPares();
+            let impares = gestor_vectores.getImpares();
+
+            document.getElementById('resultado').innerHTML = `
+                <p><strong>Datos ingresados:</strong> ${vector.join(', ')}</p>
+                <p><strong>Máximo:</strong> ${maximo}</p>
+                <p><strong>Mínimo:</strong> ${minimo}</p>
+                <p><strong>Sumatorio:</strong> ${sumatorio}</p>
+                <p><strong>Multiplicación de valores:</strong> ${multiplicacion}</p>
+                <p><strong>Pares:</strong> ${pares.length > 0 ? pares.join(', ') : 'Ninguno'}</p>
+                <p><strong>Impares:</strong> ${impares.length > 0 ? impares.join(', ') : 'Ninguno'}</p>
+            `;
+        }
     </script>
 </body>
 </html>
-
