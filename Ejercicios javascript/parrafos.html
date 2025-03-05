@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio de párrafos</title>
+    <style>
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <button onclick="ocultarPares()">Ocultar pares</button>
+    <button onclick="ocultarImpares()">Ocultar impares</button>
+    <button onclick="mostrarPares()">Mostrar pares</button>
+    <button onclick="mostrarImpares()">Mostrar impares</button>
+
+    <p>Parrafo 1</p>
+    <p>Parrafo 2</p>
+    <p>Parrafo 3</p>
+    <p>Parrafo 4</p>
+    <p>Parrafo 5</p>
+    <p>Parrafo 6</p>
+    <p>Parrafo 7</p>
+    <p>Parrafo 8</p>
+
+    <script>
+        function ocultarPares() {
+            document.querySelectorAll("p:nth-child(even)").forEach(p => p.classList.add("hidden"));
+        }
+        
+        function ocultarImpares() {
+            document.querySelectorAll("p:nth-child(odd)").forEach(p => p.classList.add("hidden"));
+        }
+        
+        function mostrarPares() {
+            document.querySelectorAll("p:nth-child(even)").forEach(p => p.classList.remove("hidden"));
+        }
+        
+        function mostrarImpares() {
+            document.querySelectorAll("p:nth-child(odd)").forEach(p => p.classList.remove("hidden"));
+        }
+    </script>
+</body>
+</html>
