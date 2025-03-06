@@ -14,9 +14,8 @@
     
     <button class="sumar">Sumar</button>
     <button class="restar">Restar</button>
-    <button class="restar">Múltiplicar</button>
-    <button class="restar">Dividir</button>
-
+    <button class="multiplicar">Multiplicar</button>
+    <button class="dividir">Dividir</button>
 
     <div class="resultado"></div>
 
@@ -25,31 +24,47 @@
             $(".sumar").click(function(){
                 var num1 = parseFloat($(".num1").val());
                 var num2 = parseFloat($(".num2").val());
-                var resultado = num1 + num2;
-                $(".resultado").html("Resultado: " + resultado);
+                if (!isNaN(num1) && !isNaN(num2)) {
+                    var resultado = num1 + num2;
+                    $(".resultado").html("Resultado: " + resultado);
+                } else {
+                    $(".resultado").html("Por favor, introduce números válidos.");
+                }
             });
 
             $(".restar").click(function(){
                 var num1 = parseFloat($(".num1").val());
                 var num2 = parseFloat($(".num2").val());
-                var resultado = num1 - num2;
-                $(".resultado").html("Resultado: " + resultado);
+                if (!isNaN(num1) && !isNaN(num2)) {
+                    var resultado = num1 - num2;
+                    $(".resultado").html("Resultado: " + resultado);
+                } else {
+                    $(".resultado").html("Por favor, introduce números válidos.");
+                }
             });
 
             $(".multiplicar").click(function(){
                 var num1 = parseFloat($(".num1").val());
                 var num2 = parseFloat($(".num2").val());
-                var resultado = num1 * num2;
-                $(".resultado").html("Resultado: " + resultado);
+                if (!isNaN(num1) && !isNaN(num2)) {
+                    var resultado = num1 * num2;
+                    $(".resultado").html("Resultado: " + resultado);
+                } else {
+                    $(".resultado").html("Por favor, introduce números válidos.");
+                }
             });
 
             $(".dividir").click(function(){
                 var num1 = parseFloat($(".num1").val());
                 var num2 = parseFloat($(".num2").val());
-                var resultado = num1 / num2;
-                $(".resultado").html("Resultado: " + resultado);
+                if (!isNaN(num1) && !isNaN(num2) && num2 !== 0) {
+                    var resultado = num1 / num2;
+                    $(".resultado").html("Resultado: " + resultado);
+                } else {
+                    $(".resultado").html("Error: No se puede dividir entre cero o valores no válidos.");
+                }
             });
-        });
+        }); // Cierre de $(document).ready
     </script>
 
 </body>
