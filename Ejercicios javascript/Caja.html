@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ejercicio</title>
+  <style>
+    #mi-div {
+      width: 300px;
+      height: 100px;
+      background-color: blue;
+      color: white;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="mi-div">
+    Pasa el ratón por encima de mí
+  </div>
+
+  <script>
+    document.getElementById('mi-div').addEventListener('mouseover', function() {
+      this.style.backgroundColor = 'red';
+    });
+    document.getElementById('mi-div').addEventListener('mouseout', function() {
+      this.style.backgroundColor = 'blue';
+    });
+  </script>
+</body>
+</html>

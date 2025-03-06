@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Básica</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        h1 { color: #333; }
+        .resultado { margin-top: 20px; font-weight: bold; }
+        div { margin-bottom: 15px; }
+        input[type="text"] { width: 50px; margin-left: 10px; }
+        select { margin-left: 10px; }
+        input[type="button"] { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Calculadora Básica</h1>
+    
+    <div>
+        <label for="numero1">Número 1:</label>
+        <input type="text" id="numero1" class="numero1">
+    </div>
+    
+    <div>
+        <label for="numero2">Número 2:</label>
+        <input type="text" id="numero2" class="numero2">
+    </div>
+
+    <div>
+        <label for="operacion">Operación:</label>
+        <select id="operacion">
+            <option value="sumar">Sumar</option>
+            <option value="restar">Restar</option>
+            <option value="multiplicar">Multiplicar</option>
+            <option value="dividir">Dividir</option>
+        </select>
+    </div>
+    
+    <input type="button" class="calcular" value="Calcular">
+    
+    <div class="resultado"></div>
+    
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".calcular").click(function() {
+                var numero1 = parseFloat($("#numero1").val());
+                var numero2 = parseFloat($("#numero2").val());
+                var operacion = $("#operacion").val();
+                var resultado;
+
+                if (isNaN(numero1) || isNaN(numero2)) {
+                    $(".resultado").html("<p>Por favor, introduce valores válidos para los números.</p>");
+                    return;
+                }
+
+                switch (operacion) {
+                    case "sumar":
+                        resultado = numero1 + numero2;
+                        break;
+                    case "restar":
+                        resultado = numero1 - numero2;
+                        break;
+                    case "multiplicar":
+                        resultado = numero1 * numero2;
+                        break;
+                    case "dividir":
+                        if (numero2 === 0) {
+                            $(".resultado").html("<p>No se puede dividir entre cero.</p>");
+                            return;
+                        }
+                        resultado = numero1 / numero2;
+                        break;
+                }
+
+                $(".resultado").html("<p>El resultado es: " + resultado + "</p>");
+            });
+        });
+    </script>
+</body>
+</html>
