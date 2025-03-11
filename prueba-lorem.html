@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+    <h1>Holaa que tal</h1>
+
+    <p class="primero">1.-Lorem Ipsum is simply dummy text of the printing
+         and typesetting industry. Lorem Ipsum has been the 
+         industry's standard dummy text ever since the 1500s, 
+         when an unknown printer took a galley of type and scrambled 
+         it to make a type specimen book. It has survived not only five 
+         centuries, but also the leap into electronic typesetting, remaining 
+         essentially unchanged. It was popularised in the 1960s with the release 
+         of Letraset sheets containing Lorem Ipsum passages, and more recently with
+        desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+        <p id="segundo">2.-Lorem Ipsum is simply dummy text of the printing
+            and typesetting industry. Lorem Ipsum has been the 
+            industry's standard dummy text ever since the 1500s, 
+            when an unknown printer took a galley of type and scrambled 
+            it to make a type specimen book. It has survived not only five 
+            centuries, but also the leap into electronic typesetting, remaining 
+            essentially unchanged. It was popularised in the 1960s with the release 
+            of Letraset sheets containing Lorem Ipsum passages, and more recently with
+           desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+           <p id="tercero">3.-Lorem Ipsum is simply dummy text of the printing
+            and typesetting industry. Lorem Ipsum has been the 
+            industry's standard dummy text ever since the 1500s, 
+            when an unknown printer took a galley of type and scrambled 
+            it to make a type specimen book. It has survived not only five 
+            centuries, but also the leap into electronic typesetting, remaining 
+            essentially unchanged. It was popularised in the 1960s with the release 
+            of Letraset sheets containing Lorem Ipsum passages, and more recently with
+           desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+
+<button id="btn-hide">hide parrafo 2</button>
+<button id="btn-show">show parrafo 2</button>
+<button id="btn-hide1">hide parrafo 1</button>
+
+
+<form onsubmit="return validarFormulario()">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    
+    <label for="telefono">Teléfono:</label>
+    <input type="text" id="telefono" name="telefono" required>
+    
+    <button type="submit">Enviar</button>
+</form>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+
+$(function(){
+
+    $(".primero").css({"background-color": "green"});
+
+$("#segundo").css({"background-color": "red"});
+
+$("#btn-hide").click(function(){
+/*alert("hola");*/
+$("#segundo").hide();
+
+});
+
+//doble click para que desaparezca
+$("#btn-hide1").dblclick(function(){
+/*alert("hola");*/
+$(".primero").hide();
+
+});
+
+$("#btn-show").click(function(){
+/*alert("hola");*/
+$("#segundo").show();
+
+});
+
+
+//al pasar el raton desaparece
+$("#segundo").mouseenter(function(){
+$("#tercero").hide();
+
+});
+
+$("#segundo").mouseleave(function(){
+$("#tercero").show();
+
+});
+
+});
+
+//formulario
+
+function validarFormulario() {
+    let nombre = document.getElementById("nombre").value;
+    let email = document.getElementById("email").value;
+    let telefono = document.getElementById("telefono").value;
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let phoneRegex = /^[0-9]{10}$/;
+    
+    if (nombre.trim() === "") {
+        alert("El nombre es obligatorio.");
+        return false;
+    }
+    if (!emailRegex.test(email)) {
+        alert("Ingrese un correo válido.");
+        return false;
+    }
+    if (!phoneRegex.test(telefono)) {
+        alert("Ingrese un número de teléfono válido (10 dígitos).");
+        return false;
+    }
+    return true;
+}
+
+
+</script>
+</body>
+</html>
