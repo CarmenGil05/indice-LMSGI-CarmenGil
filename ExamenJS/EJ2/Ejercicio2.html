@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio2</title>
+</head>
+<style>
+    .par {
+        color: blue;
+        font-weight: bold;
+    }
+    .impar {
+        color: red;
+        font-weight: bold;
+    }
+</style>
+<body>
+
+    <script>
+        let input = prompt("Introduce un número:");
+        let numero = Number(input);
+        let resultado = 0;
+
+        if (!isNaN(numero) && numero > 0) {
+            for (let i = 1; i <= numero; i++) {
+                let clase = (i % 2 === 0) ? 'par' : 'impar';
+                document.write(`<p class="${clase}"> La tabla del: ${i}</p>`);
+                for (let j = 1; j <= 10; j++) {
+                    resultado = i * j;
+                    document.write(`<p class="${clase}">${i} x ${j} = ${resultado}</p>`);
+                }
+                document.write("<br>");
+            }
+        } else {
+            document.write("Por favor, ingrese un número válido.");
+        }
+    </script>
+
+
+
+
+
+
+//script>
+        let sc = prompt("Introduce un numero:");
+        let numero = Number(sc);
+        let resultado = 0;
+
+        for (let i = 1; i < numero + 1; i++) {
+            document.write("<p id=cosa> La tabla del: " + i + "</p>");
+            for (let j = 1; j < 11; j++) {
+                resultado = i * j;
+                document.writeln("<p id=cosa>" + i + "x" + j + "=" + resultado);
+            }
+        }
+
+
+script>
+
+    <script src="jquery.js"></script>
+
+</body>
+</html>
