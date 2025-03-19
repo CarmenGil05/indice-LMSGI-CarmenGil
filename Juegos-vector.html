@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecciona tus juegos favoritos</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery agregado -->
+</head>
+<body>
+    <h2>Selecciona tus juegos favoritos 🎮</h2>
+    <div class="ui-grid-d">
+        <div class="ui-block-a">
+            <input type="checkbox" name="juego" id="fifa">
+            <label for="fifa">FIFA</label>
+        </div>
+        <div class="ui-block-b">
+            <input type="checkbox" name="juego" id="minecraft">
+            <label for="minecraft">Minecraft</label>
+        </div>
+        <div class="ui-block-c">
+            <input type="checkbox" name="juego" id="gta">
+            <label for="gta">GTA V</label>
+        </div>
+        <div class="ui-block-d">
+            <input type="checkbox" name="juego" id="fortnite">
+            <label for="fortnite">Fortnite</label>
+        </div>
+        <div class="ui-block-e">
+            <input type="checkbox" name="juego" id="zelda">
+            <label for="zelda">The Legend of Zelda</label>
+        </div>
+    </div>
+    <input type="text" id="informe" readonly> <!-- Input para mostrar el conteo -->
+
+    <script>
+        $(document).ready(main);
+
+        function contar() {
+            let contador = 0;
+            let juegos = ["#fifa", "#minecraft", "#gta", "#fortnite", "#zelda"];
+
+            juegos.forEach(id => {
+                if ($(id).prop("checked")) {
+                    contador++;
+                }
+            });
+
+            $("#informe").val("Juegos seleccionados: " + contador);
+        }
+
+        function main() {
+            $("#fifa, #minecraft, #gta, #fortnite, #zelda").on("click", contar);
+        }
+    </script>
+</body>
+</html>
