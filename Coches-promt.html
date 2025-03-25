@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurador de Coche para IA</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        .form-section {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        select, input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+        #output {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Configurador de Coche para IA</h1>
+    
+    <div class="form-section">
+        <h2>Información Básica</h2>
+        <label for="marca">Marca:</label>
+        <select id="marca" required onchange="actualizarModelos()">
+            <option value="">-- Selecciona --</option>
+            <option value="Toyota">Toyota</option>
+            <option value="Volkswagen">Volkswagen</option>
+            <option value="Ford">Ford</option>
+            <option value="BMW">BMW</option>
+            <option value="Mercedes">Mercedes-Benz</option>
+            <option value="Audi">Audi</option>
+        </select>
+        
+        <label for="modelo">Modelo:</label>
+        <select id="modelo" required>
+            <option value="">-- Primero selecciona marca --</option>
+        </select>
+    </div>
+    
+    <div class="form-section">
+        <h2>Especificaciones Técnicas</h2>
+        <label for="combustible">Combustible:</label>
+        <select id="combustible" required>
+            <option value="">-- Selecciona --</option>
+            <option value="gasolina">Gasolina</option>
+            <option value="diésel">Diésel</option>
+            <option value="híbrido">Híbrido (Gasolina/Eléctrico)</option>
+            <option value="híbrido-enchufable">Híbrido Enchufable</option>
+            <option value="eléctrico">Eléctrico</option>
+        </select>
+        
+        <label>Transmisión:</label>
+        <div>
+            <input type="radio" id="manual" name="transmision" value="manual" checked>
+            <label for="manual" style="display: inline;">Manual</label>
+        </div>
+        <div>
+            <input type="radio" id="automatico" name="transmision" value="automático">
+            <label for="automatico" style="display: inline;">Automático</label>
+        </div>
+    </div>
+    
+    <div class="form-section">
+        <h2>Características</h2>
+        <div>
+            <input type="checkbox" id="aire" name="caracteristicas" value="aire acondicionado">
+            <label for="aire" style="display: inline;">Aire acondicionado</label>
+        </div>
+        <div>
+            <input type="checkbox" id="camara" name="caracteristicas" value="cámara de reversa">
+            <label for="camara" style="display: inline;">Cámara de reversa</label>
+        </div>
+        <div>
+            <input type="checkbox" id="sensores" name="caracteristicas" value="sensores de estacionamiento">
+            <label for="sensores" style="display: inline;">Sensores de estacionamiento</label>
+        </div>
+        <div>
+            <input type="checkbox" id="navegacion" name="caracteristicas" value="sistema de navegación">
+            <label for="navegacion" style="display: inline;">Sistema de navegación</label>
+        </div>
+        <div>
+            <input type="checkbox" id="cierre" name="caracteristicas" value="cierre centralizado">
+            <label for="cierre" style="display: inline;">Cierre centralizado</label>
+        </div>
+    </div>
+    
+    <button onclick="generarPrompt()">Generar Prompt para IA</button>
+    
+    <div class="form-section">
+        <h2>Prompt Generado</h2>
+        <p>Este texto puedes copiarlo y enviarlo a una IA:</p>
+        <div id="output">Aquí aparecerá el prompt generado...</div>
+        <button onclick="copiarPrompt()">Copiar Prompt</button>
+    </div>
+
+    <script>
+        // Base de datos de modelos por marca
+        const modelosPorMarca = {
+            "Toyota": ["Corolla", "Camry", "RAV4", "Prius", "Hilux", "Yaris", "Land Cruiser"],
+            "Volkswagen": ["Golf", "Passat", "Tiguan", "Polo", "Jetta", "Arteon", "T-Roc"],
+            "Ford": ["Focus", "Fiesta", "Mustang", "Ranger", "Explorer", "Kuga", "Edge"],
+            "BMW": ["Serie 3", "Serie 5", "X5", "X3", "M4", "i4", "X7"],
+            "Mercedes": ["Clase A", "Clase C", "Clase E", "GLA", "GLC", "EQE", "Clase S"],
+            "Audi": ["A3", "A4", "A6", "Q5", "Q7", "Q3", "e-tron"]
+        };
+
+        function actualizarModelos() {
+            const marcaSeleccionada = document.getElementById('marca').value;
+            const selectModelo = document.getElementById('modelo');
+            
+            // Limpiar opciones anteriores
+            selectModelo.innerHTML = '<option value="">-- Selecciona modelo --</option>';
+            
+            if (marcaSeleccionada && modelosPorMarca[marcaSeleccionada]) {
+                modelosPorMarca[marcaSeleccionada].forEach(modelo => {
+                    const option = document.createElement('option');
+                    option.value = modelo;
+                    option.textContent = modelo;
+                    selectModelo.appendChild(option);
+                });
+            }
+        }
+
+        function generarPrompt() {
+            // Validar campos obligatorios
+            if (!document.getElementById('marca').value || 
+                !document.getElementById('modelo').value || 
+                !document.getElementById('combustible').value) {
+                alert('Por favor complete todos los campos obligatorios');
+                return;
+            }
+
+            // Obtener valores
+            const marca = document.getElementById('marca').value;
+            const modelo = document.getElementById('modelo').value;
+            const combustible = document.getElementById('combustible').value;
+            const transmision = document.querySelector('input[name="transmision"]:checked').value;
+            
+            // Obtener características seleccionadas
+            const caracteristicas = Array.from(document.querySelectorAll('input[name="caracteristicas"]:checked'))
+                                      .map(el => el.value);
+            
+            // Construir el prompt
+            let prompt = `Como experto en automóviles, necesito información detallada sobre:\n\n`;
+            prompt += `**Vehículo solicitado:**\n`;
+            prompt += `- Marca: ${marca}\n`;
+            prompt += `- Modelo: ${modelo}\n`;
+            prompt += `- Combustible: ${combustible}\n`;
+            prompt += `- Transmisión: ${transmision}\n`;
+            
+            if (caracteristicas.length > 0) {
+                prompt += `- Equipamiento: ${caracteristicas.join(', ')}\n`;
+            }
+            
+            prompt += `\n**Información requerida:**\n`;
+            prompt += `1. Precio aproximado en el mercado actual\n`;
+            prompt += `2. Consumo promedio (ciudad/carretera)\n`;
+            prompt += `3. Ventajas y desventajas técnicas\n`;
+            prompt += `4. Opiniones de propietarios (si disponible)\n`;
+            prompt += `5. Comparativa con modelos similares de otras marcas\n\n`;
+            prompt += `Por favor, organiza la información en secciones claras y utiliza lenguaje técnico pero comprensible.`;
+            
+            // Mostrar el prompt
+            document.getElementById('output').textContent = prompt;
+        }
+        
+        function copiarPrompt() {
+            const output = document.getElementById('output');
+            navigator.clipboard.writeText(output.textContent)
+                .then(() => alert('¡Prompt copiado al portapapeles!'))
+                .catch(err => alert('Error al copiar: ' + err));
+        }
+    </script>
+</body>
+</html>
