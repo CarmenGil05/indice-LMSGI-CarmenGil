@@ -15,44 +15,77 @@
         }
         .form-section {
             margin-bottom: 25px;
-            padding: 15px;
-            border: 1px solid #eee;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
             border-radius: 8px;
+            background: #f9f9f9;
         }
         h1 {
             color: #2c3e50;
             text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #3498db;
+            margin-top: 0;
+            font-size: 1.3em;
         }
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: bold;
         }
-        select, input, textarea {
+        select, input {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
+            padding: 10px;
+            margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            font-size: 16px;
+        }
+        .option-group {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #eee;
+        }
+        .checkbox-container, .radio-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 8px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+        input[type="checkbox"], input[type="radio"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
         }
         button {
             background: #3498db;
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 12px 25px;
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
             display: block;
-            margin: 20px auto;
+            margin: 30px auto;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #2980b9;
         }
         #output {
-            background: #f9f9f9;
-            padding: 15px;
+            background: white;
+            padding: 20px;
             border-radius: 5px;
             border-left: 4px solid #3498db;
             white-space: pre-wrap;
-            font-family: monospace;
+            font-family: 'Courier New', monospace;
+            margin-top: 20px;
         }
         .hidden {
             display: none;
@@ -64,77 +97,96 @@
     
     <div class="form-section">
         <h2>Información Básica</h2>
-        <label for="marca">Marca:</label>
-        <select id="marca" required onchange="actualizarModelos()">
-            <option value="">-- Selecciona --</option>
-            <option value="Toyota">Toyota</option>
-            <option value="Volkswagen">Volkswagen</option>
-            <option value="Ford">Ford</option>
-            <option value="BMW">BMW</option>
-            <option value="Mercedes">Mercedes-Benz</option>
-            <option value="Audi">Audi</option>
-        </select>
+        <div class="option-group">
+            <label for="marca">Marca (opcional):</label>
+            <select id="marca" onchange="actualizarModelos()">
+                <option value="">-- Cualquier marca --</option>
+                <option value="Toyota">Toyota</option>
+                <option value="Volkswagen">Volkswagen</option>
+                <option value="Ford">Ford</option>
+                <option value="BMW">BMW</option>
+                <option value="Mercedes">Mercedes-Benz</option>
+                <option value="Audi">Audi</option>
+            </select>
+        </div>
         
-        <label for="modelo">Modelo:</label>
-        <select id="modelo" required>
-            <option value="">-- Primero selecciona marca --</option>
-        </select>
+        <div class="option-group">
+            <label for="modelo">Modelo (opcional):</label>
+            <select id="modelo">
+                <option value="">-- Cualquier modelo --</option>
+            </select>
+        </div>
     </div>
     
     <div class="form-section">
         <h2>Especificaciones Técnicas</h2>
-        <label for="combustible">Combustible:</label>
-        <select id="combustible" required>
-            <option value="">-- Selecciona --</option>
-            <option value="gasolina">Gasolina</option>
-            <option value="diésel">Diésel</option>
-            <option value="híbrido">Híbrido (Gasolina/Eléctrico)</option>
-            <option value="híbrido-enchufable">Híbrido Enchufable</option>
-            <option value="eléctrico">Eléctrico</option>
-        </select>
+        <div class="option-group">
+            <label for="combustible">Tipo de motor:</label>
+            <select id="combustible" required>
+                <option value="">-- Selecciona --</option>
+                <option value="gasolina">Gasolina</option>
+                <option value="diésel">Diésel</option>
+                <option value="híbrido">Híbrido</option>
+                <option value="eléctrico">Eléctrico</option>
+            </select>
+        </div>
         
-        <label>Transmisión:</label>
-        <div>
-            <input type="radio" id="manual" name="transmision" value="manual" checked>
-            <label for="manual" style="display: inline;">Manual</label>
+        <div class="option-group">
+            <label for="transmision">Transmisión:</label>
+            <select id="transmision" required>
+                <option value="">-- Selecciona --</option>
+                <option value="manual">Manual</option>
+                <option value="automática">Automática</option>
+            </select>
         </div>
-        <div>
-            <input type="radio" id="automatico" name="transmision" value="automático">
-            <label for="automatico" style="display: inline;">Automático</label>
+        
+        <div class="option-group">
+            <label for="traccion">Tracción:</label>
+            <select id="traccion" required>
+                <option value="">-- Selecciona --</option>
+                <option value="delantera">Delantera</option>
+                <option value="trasera">Trasera</option>
+                <option value="4x4">4x4 (Integral)</option>
+                <option value="awd">AWD (Tracción total)</option>
+            </select>
         </div>
     </div>
     
     <div class="form-section">
-        <h2>Características</h2>
-        <div>
-            <input type="checkbox" id="aire" name="caracteristicas" value="aire acondicionado">
-            <label for="aire" style="display: inline;">Aire acondicionado</label>
+        <h2>Características Físicas</h2>
+        <div class="option-group">
+            <label for="carroceria">Tipo de carrocería:</label>
+            <select id="carroceria" required>
+                <option value="">-- Selecciona --</option>
+                <option value="sedán">Sedán</option>
+                <option value="hatchback">Hatchback</option>
+                <option value="suv">SUV</option>
+                <option value="coupé">Coupé</option>
+                <option value="familiar">Familiar</option>
+                <option value="deportivo">Deportivo</option>
+                <option value="pickup">Pickup</option>
+            </select>
         </div>
-        <div>
-            <input type="checkbox" id="camara" name="caracteristicas" value="cámara de reversa">
-            <label for="camara" style="display: inline;">Cámara de reversa</label>
-        </div>
-        <div>
-            <input type="checkbox" id="sensores" name="caracteristicas" value="sensores de estacionamiento">
-            <label for="sensores" style="display: inline;">Sensores de estacionamiento</label>
-        </div>
-        <div>
-            <input type="checkbox" id="navegacion" name="caracteristicas" value="sistema de navegación">
-            <label for="navegacion" style="display: inline;">Sistema de navegación</label>
-        </div>
-        <div>
-            <input type="checkbox" id="cierre" name="caracteristicas" value="cierre centralizado">
-            <label for="cierre" style="display: inline;">Cierre centralizado</label>
+        
+        <div class="option-group">
+            <label for="puertas">Número de puertas:</label>
+            <select id="puertas" required>
+                <option value="">-- Selecciona --</option>
+                <option value="2">2 puertas</option>
+                <option value="3">3 puertas</option>
+                <option value="4">4 puertas</option>
+                <option value="5">5 puertas</option>
+            </select>
         </div>
     </div>
     
-    <button onclick="generarPrompt()">Generar Prompt para IA</button>
+    <button onclick="generarFrase()">Generar Consulta para IA</button>
     
     <div class="form-section">
-        <h2>Prompt Generado</h2>
-        <p>Este texto puedes copiarlo y enviarlo a una IA:</p>
-        <div id="output">Aquí aparecerá el prompt generado...</div>
-        <button onclick="copiarPrompt()">Copiar Prompt</button>
+        <h2>Consulta Generada</h2>
+        <p>Copia este texto y pégaselo a una IA:</p>
+        <div id="output">Aquí aparecerá la consulta generada...</div>
+        <button onclick="copiarPrompt()">Copiar Texto</button>
     </div>
 
     <script>
@@ -152,8 +204,7 @@
             const marcaSeleccionada = document.getElementById('marca').value;
             const selectModelo = document.getElementById('modelo');
             
-            // Limpiar opciones anteriores
-            selectModelo.innerHTML = '<option value="">-- Selecciona modelo --</option>';
+            selectModelo.innerHTML = '<option value="">-- Cualquier modelo --</option>';
             
             if (marcaSeleccionada && modelosPorMarca[marcaSeleccionada]) {
                 modelosPorMarca[marcaSeleccionada].forEach(modelo => {
@@ -165,53 +216,60 @@
             }
         }
 
-        function generarPrompt() {
+        function generarFrase() {
             // Validar campos obligatorios
-            if (!document.getElementById('marca').value || 
-                !document.getElementById('modelo').value || 
-                !document.getElementById('combustible').value) {
+            const camposRequeridos = ['combustible', 'transmision', 'traccion', 'carroceria', 'puertas'];
+            let camposFaltantes = [];
+            
+            camposRequeridos.forEach(campo => {
+                if (!document.getElementById(campo).value) {
+                    camposFaltantes.push(campo);
+                }
+            });
+            
+            if (camposFaltantes.length > 0) {
                 alert('Por favor complete todos los campos obligatorios');
                 return;
             }
 
             // Obtener valores
-            const marca = document.getElementById('marca').value;
-            const modelo = document.getElementById('modelo').value;
+            const marca = document.getElementById('marca').value || 'cualquier marca';
+            const modelo = document.getElementById('modelo').value || 'cualquier modelo';
             const combustible = document.getElementById('combustible').value;
-            const transmision = document.querySelector('input[name="transmision"]:checked').value;
+            const transmision = document.getElementById('transmision').value;
+            const traccion = document.getElementById('traccion').value;
+            const carroceria = document.getElementById('carroceria').value;
+            const puertas = document.getElementById('puertas').value;
             
-            // Obtener características seleccionadas
-            const caracteristicas = Array.from(document.querySelectorAll('input[name="caracteristicas"]:checked'))
-                                      .map(el => el.value);
+            // Construir la frase
+            let frase = `Quiero los 3 mejores coches `;
             
-            // Construir el prompt
-            let prompt = `Como experto en automóviles, necesito información detallada sobre:\n\n`;
-            prompt += `**Vehículo solicitado:**\n`;
-            prompt += `- Marca: ${marca}\n`;
-            prompt += `- Modelo: ${modelo}\n`;
-            prompt += `- Combustible: ${combustible}\n`;
-            prompt += `- Transmisión: ${transmision}\n`;
-            
-            if (caracteristicas.length > 0) {
-                prompt += `- Equipamiento: ${caracteristicas.join(', ')}\n`;
+            if (marca !== 'cualquier marca') {
+                frase += `de la marca ${marca} `;
             }
             
-            prompt += `\n**Información requerida:**\n`;
-            prompt += `1. Precio aproximado en el mercado actual\n`;
-            prompt += `2. Consumo promedio (ciudad/carretera)\n`;
-            prompt += `3. Ventajas y desventajas técnicas\n`;
-            prompt += `4. Opiniones de propietarios (si disponible)\n`;
-            prompt += `5. Comparativa con modelos similares de otras marcas\n\n`;
-            prompt += `Por favor, organiza la información en secciones claras y utiliza lenguaje técnico pero comprensible.`;
+            if (modelo !== 'cualquier modelo') {
+                frase += `modelo ${modelo} `;
+            }
             
-            // Mostrar el prompt
-            document.getElementById('output').textContent = prompt;
+            frase += `que sean de motor ${combustible} con transmisión ${transmision}, `;
+            frase += `que tengan tracción ${traccion}, `;
+            frase += `tipo de carrocería ${carroceria} `;
+            frase += `y con ${puertas} puertas.`;
+            
+            frase += `\n\nRequisitos adicionales:\n`;
+            frase += `- Mostrar precios aproximados\n`;
+            frase += `- Incluir consumo de combustible\n`;
+            frase += `- Mencionar versión más equipada\n`;
+            
+            // Mostrar el resultado
+            document.getElementById('output').textContent = frase;
         }
         
         function copiarPrompt() {
             const output = document.getElementById('output');
             navigator.clipboard.writeText(output.textContent)
-                .then(() => alert('¡Prompt copiado al portapapeles!'))
+                .then(() => alert('¡Texto copiado al portapapeles!'))
                 .catch(err => alert('Error al copiar: ' + err));
         }
     </script>
