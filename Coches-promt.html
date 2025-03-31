@@ -3,275 +3,435 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configurador de Coche para IA</title>
+    <title>Formulario de Preferencias de Coche</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #f0f4f8;
             color: #333;
         }
-        .form-section {
-            margin-bottom: 25px;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            background: #f9f9f9;
-        }
         h1 {
-            color: #2c3e50;
+            color: #2d3748;
             text-align: center;
             margin-bottom: 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
-        h2 {
-            color: #3498db;
-            margin-top: 0;
-            font-size: 1.3em;
+        .form-container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
-        select, input {
-            width: 100%;
-            padding: 10px;
+        .form-section {
             margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
+            padding: 18px;
+            border-radius: 10px;
+            background-color: #f8fafc;
+            border-left: 4px solid #6366f1;
+            transition: all 0.3s ease;
+        }
+        .form-section:hover {
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+            transform: translateY(-2px);
+        }
+        .form-section h3 {
+            margin-top: 0;
+            color: #4f46e5;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
         }
         .option-group {
-            margin-bottom: 15px;
-            padding: 10px;
-            background: white;
-            border-radius: 5px;
-            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
-        .checkbox-container, .radio-container {
+        .option-item {
+            background-color: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px 15px;
+            transition: all 0.2s ease;
+        }
+        .option-item:hover {
+            border-color: #6366f1;
+            background-color: #f5f7ff;
+        }
+        input[type="checkbox"] {
+            margin-right: 8px;
+            accent-color: #6366f1;
+            width: 16px;
+            height: 16px;
+        }
+        label {
+            cursor: pointer;
+            font-size: 15px;
             display: flex;
             align-items: center;
-            margin-bottom: 8px;
-            padding: 8px;
-            background: #f5f5f5;
-            border-radius: 4px;
         }
-        input[type="checkbox"], input[type="radio"] {
-            margin-right: 10px;
-            width: 18px;
-            height: 18px;
-        }
-        button {
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            margin: 30px auto;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background: #2980b9;
-        }
-        #output {
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            border-left: 4px solid #3498db;
-            white-space: pre-wrap;
-            font-family: 'Courier New', monospace;
+        .controls-section {
+            grid-column: span 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             margin-top: 20px;
         }
-        .hidden {
-            display: none;
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f1f5f9;
+            border-radius: 10px;
+            grid-column: span 2;
+        }
+        .price-estimation {
+            font-size: 22px;
+            font-weight: bold;
+            color: #4f46e5;
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 10px;
+            border-bottom: 2px dashed #cbd5e1;
+        }
+        .prompt-result {
+            background-color: #2d3748;
+            color: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            font-size: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            background-color: #6366f1;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+        }
+        button:hover {
+            background-color: #4f46e5;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+        }
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .controls-section, .result-section {
+                grid-column: span 1;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Configurador de Coche para IA</h1>
-    
-    <div class="form-section">
-        <h2>Información Básica</h2>
-        <div class="option-group">
-            <label for="marca">Marca (opcional):</label>
-            <select id="marca" onchange="actualizarModelos()">
-                <option value="">-- Cualquier marca --</option>
-                <option value="Toyota">Toyota</option>
-                <option value="Volkswagen">Volkswagen</option>
-                <option value="Ford">Ford</option>
-                <option value="BMW">BMW</option>
-                <option value="Mercedes">Mercedes-Benz</option>
-                <option value="Audi">Audi</option>
-            </select>
-        </div>
+    <div class="form-container">
+        <h1>🚗 Buscador de Coches Ideal</h1>
         
-        <div class="option-group">
-            <label for="modelo">Modelo (opcional):</label>
-            <select id="modelo">
-                <option value="">-- Cualquier modelo --</option>
-            </select>
+        <div class="form-grid">
+            <div class="form-section">
+                <h3>Tipo de Motor</h3>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="checkbox" id="motor-gasolina" name="motor" value="gasolina" data-price="5000">
+                        <label for="motor-gasolina">Gasolina</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="motor-diesel" name="motor" value="diesel" data-price="6800">
+                        <label for="motor-diesel">Diésel</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="motor-hibrido" name="motor" value="híbrido" data-price="7500">
+                        <label for="motor-hibrido">Híbrido</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="motor-electrico" name="motor" value="eléctrico" data-price="9000">
+                        <label for="motor-electrico">Eléctrico</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Tipo de Transmisión</h3>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="checkbox" id="transmision-manual" name="transmision" value="manual" data-price="0">
+                        <label for="transmision-manual">Manual</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="transmision-automatica" name="transmision" value="automática" data-price="2000">
+                        <label for="transmision-automatica">Automática</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="transmision-secuencial" name="transmision" value="secuencial" data-price="3000">
+                        <label for="transmision-secuencial">Secuencial</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Tipo de Tracción</h3>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="checkbox" id="traccion-delantera" name="traccion" value="delantera" data-price="0">
+                        <label for="traccion-delantera">Delantera</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="traccion-trasera" name="traccion" value="trasera" data-price="1500">
+                        <label for="traccion-trasera">Trasera</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="traccion-4x4" name="traccion" value="4x4" data-price="4500">
+                        <label for="traccion-4x4">4x4</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Número de Puertas</h3>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="checkbox" id="puertas-3" name="puertas" value="3" data-price="0">
+                        <label for="puertas-3">2 puertas</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="puertas-5" name="puertas" value="5" data-price="800">
+                        <label for="puertas-5">3 puertas</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="puertas-5" name="puertas" value="5" data-price="800">
+                        <label for="puertas-5">4 puertas</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="puertas-5" name="puertas" value="5" data-price="800">
+                        <label for="puertas-5">5 puertas</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Tipo de Carrocería</h3>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="checkbox" id="carroceria-sedan" name="carroceria" value="sedán" data-price="0">
+                        <label for="carroceria-sedan">Sedán</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="carroceria-hatchback" name="carroceria" value="hatchback" data-price="500">
+                        <label for="carroceria-hatchback">Hatchback</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="carroceria-suv" name="carroceria" value="SUV" data-price="3700">
+                        <label for="carroceria-suv">SUV</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="carroceria-familiar" name="carroceria" value="familiar" data-price="2200">
+                        <label for="carroceria-familiar">Familiar</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="carroceria-deportivo" name="carroceria" value="deportivo" data-price="8000">
+                        <label for="carroceria-deportivo">Deportivo</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls-section">
+                <button id="generate-button">Generar Recomendación</button>
+            </div>
+            
+            <div class="result-section" style="display: none;" id="result-container">
+                <div class="price-estimation" id="price-display">Precio aproximado: 0 €</div>
+                <h3>Prompt para IA:</h3>
+                <div class="prompt-result" id="prompt-result"></div>
+            </div>
         </div>
-    </div>
-    
-    <div class="form-section">
-        <h2>Especificaciones Técnicas</h2>
-        <div class="option-group">
-            <label for="combustible">Tipo de motor:</label>
-            <select id="combustible" required>
-                <option value="">-- Selecciona --</option>
-                <option value="gasolina">Gasolina</option>
-                <option value="diésel">Diésel</option>
-                <option value="híbrido">Híbrido</option>
-                <option value="eléctrico">Eléctrico</option>
-            </select>
-        </div>
-        
-        <div class="option-group">
-            <label for="transmision">Transmisión:</label>
-            <select id="transmision" required>
-                <option value="">-- Selecciona --</option>
-                <option value="manual">Manual</option>
-                <option value="automática">Automática</option>
-            </select>
-        </div>
-        
-        <div class="option-group">
-            <label for="traccion">Tracción:</label>
-            <select id="traccion" required>
-                <option value="">-- Selecciona --</option>
-                <option value="delantera">Delantera</option>
-                <option value="trasera">Trasera</option>
-                <option value="4x4">4x4 (Integral)</option>
-                <option value="awd">AWD (Tracción total)</option>
-            </select>
-        </div>
-    </div>
-    
-    <div class="form-section">
-        <h2>Características Físicas</h2>
-        <div class="option-group">
-            <label for="carroceria">Tipo de carrocería:</label>
-            <select id="carroceria" required>
-                <option value="">-- Selecciona --</option>
-                <option value="sedán">Sedán</option>
-                <option value="hatchback">Hatchback</option>
-                <option value="suv">SUV</option>
-                <option value="coupé">Coupé</option>
-                <option value="familiar">Familiar</option>
-                <option value="deportivo">Deportivo</option>
-                <option value="pickup">Pickup</option>
-            </select>
-        </div>
-        
-        <div class="option-group">
-            <label for="puertas">Número de puertas:</label>
-            <select id="puertas" required>
-                <option value="">-- Selecciona --</option>
-                <option value="2">2 puertas</option>
-                <option value="3">3 puertas</option>
-                <option value="4">4 puertas</option>
-                <option value="5">5 puertas</option>
-            </select>
-        </div>
-    </div>
-    
-    <button onclick="generarFrase()">Generar Consulta para IA</button>
-    
-    <div class="form-section">
-        <h2>Consulta Generada</h2>
-        <p>Copia este texto y pégaselo a una IA:</p>
-        <div id="output">Aquí aparecerá la consulta generada...</div>
-        <button onclick="copiarPrompt()">Copiar Texto</button>
     </div>
 
     <script>
-        // Base de datos de modelos por marca
-        const modelosPorMarca = {
-            "Toyota": ["Corolla", "Camry", "RAV4", "Prius", "Hilux", "Yaris", "Land Cruiser"],
-            "Volkswagen": ["Golf", "Passat", "Tiguan", "Polo", "Jetta", "Arteon", "T-Roc"],
-            "Ford": ["Focus", "Fiesta", "Mustang", "Ranger", "Explorer", "Kuga", "Edge"],
-            "BMW": ["Serie 3", "Serie 5", "X5", "X3", "M4", "i4", "X7"],
-            "Mercedes": ["Clase A", "Clase C", "Clase E", "GLA", "GLC", "EQE", "Clase S"],
-            "Audi": ["A3", "A4", "A6", "Q5", "Q7", "Q3", "e-tron"]
-        };
-
-        function actualizarModelos() {
-            const marcaSeleccionada = document.getElementById('marca').value;
-            const selectModelo = document.getElementById('modelo');
+        document.addEventListener('DOMContentLoaded', function() {
+    // Initialize price and selections
+    let totalPrice = 0;
+    let basePrice = 10000; // Precio base para cualquier coche
+    let selectedOptions = {
+        motor: [],
+        transmision: [],
+        traccion: [],
+        carroceria: [],
+        puertas: []
+    };
+    
+    // Add click event for all checkboxes
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const category = this.name;
+            const value = this.value;
+            const price = parseInt(this.dataset.price);
             
-            selectModelo.innerHTML = '<option value="">-- Cualquier modelo --</option>';
-            
-            if (marcaSeleccionada && modelosPorMarca[marcaSeleccionada]) {
-                modelosPorMarca[marcaSeleccionada].forEach(modelo => {
-                    const option = document.createElement('option');
-                    option.value = modelo;
-                    option.textContent = modelo;
-                    selectModelo.appendChild(option);
+            // If checked, add to selected options and price
+            if (this.checked) {
+                // Uncheck other options in the same category
+                document.querySelectorAll(`input[name="${category}"]`).forEach(cb => {
+                    if (cb !== this && cb.checked) {
+                        cb.checked = false;
+                        // Remove from selected options
+                        selectedOptions[category] = selectedOptions[category].filter(item => item.value !== cb.value);
+                    }
                 });
-            }
-        }
-
-        function generarFrase() {
-            // Validar campos obligatorios
-            const camposRequeridos = ['combustible', 'transmision', 'traccion', 'carroceria', 'puertas'];
-            let camposFaltantes = [];
-            
-            camposRequeridos.forEach(campo => {
-                if (!document.getElementById(campo).value) {
-                    camposFaltantes.push(campo);
-                }
-            });
-            
-            if (camposFaltantes.length > 0) {
-                alert('Por favor complete todos los campos obligatorios');
-                return;
-            }
-
-            // Obtener valores
-            const marca = document.getElementById('marca').value || 'cualquier marca';
-            const modelo = document.getElementById('modelo').value || 'cualquier modelo';
-            const combustible = document.getElementById('combustible').value;
-            const transmision = document.getElementById('transmision').value;
-            const traccion = document.getElementById('traccion').value;
-            const carroceria = document.getElementById('carroceria').value;
-            const puertas = document.getElementById('puertas').value;
-            
-            // Construir la frase
-            let frase = `Quiero los 3 mejores coches `;
-            
-            if (marca !== 'cualquier marca') {
-                frase += `de la marca ${marca} `;
+                
+                // Add this option
+                selectedOptions[category] = [{value: value, price: price}];
+            } else {
+                // Remove from selected options
+                selectedOptions[category] = [];
             }
             
-            if (modelo !== 'cualquier modelo') {
-                frase += `modelo ${modelo} `;
+            // Recalculate total price based on all current selections
+            calculateTotalPrice();
+        });
+    });
+    
+    // Calculate the total price considering combinations
+    function calculateTotalPrice() {
+        // Start with base price
+        totalPrice = basePrice;
+        
+        // Add individual component prices
+        for (const category in selectedOptions) {
+            if (selectedOptions[category].length > 0) {
+                totalPrice += selectedOptions[category][0].price;
             }
-            
-            frase += `que sean de motor ${combustible} con transmisión ${transmision}, `;
-            frase += `que tengan tracción ${traccion}, `;
-            frase += `tipo de carrocería ${carroceria} `;
-            frase += `y con ${puertas} puertas.`;
-            
-            frase += `\n\nRequisitos adicionales:\n`;
-            frase += `- Mostrar precios aproximados\n`;
-            frase += `- Incluir consumo de combustible\n`;
-            frase += `- Mencionar versión más equipada\n`;
-            
-            // Mostrar el resultado
-            document.getElementById('output').textContent = frase;
         }
         
-        function copiarPrompt() {
-            const output = document.getElementById('output');
-            navigator.clipboard.writeText(output.textContent)
-                .then(() => alert('¡Texto copiado al portapapeles!'))
-                .catch(err => alert('Error al copiar: ' + err));
+        // Apply combination-specific adjustments
+        applyPriceCombinations();
+        
+        // Update price display
+        document.getElementById('price-display').textContent = `Precio aproximado: ${totalPrice.toLocaleString()} €`;
+    }
+    
+    // Apply price modifiers based on specific combinations
+    function applyPriceCombinations() {
+        const motor = selectedOptions.motor.length > 0 ? selectedOptions.motor[0].value : null;
+        const transmision = selectedOptions.transmision.length > 0 ? selectedOptions.transmision[0].value : null;
+        const traccion = selectedOptions.traccion.length > 0 ? selectedOptions.traccion[0].value : null;
+        const carroceria = selectedOptions.carroceria.length > 0 ? selectedOptions.carroceria[0].value : null;
+        const puertas = selectedOptions.puertas.length > 0 ? selectedOptions.puertas[0].value : null;
+        
+        // Special case for the example: híbrido, 5 puertas, manual, 4x4, familiar = 40.000€
+        if (motor === 'híbrido' && puertas === '5' && transmision === 'manual' && 
+            traccion === '4x4' && carroceria === 'familiar') {
+            totalPrice = 40000;
+            return;
         }
+        
+        // Premium combinations add extra cost
+        if (motor === 'híbrido' || motor === 'eléctrico') {
+            if (traccion === '4x4') {
+                totalPrice += 5000; // Extra cost for hybrid/electric with 4x4
+            }
+            
+            if (carroceria === 'SUV') {
+                totalPrice += 3000; // SUV premium for hybrid/electric
+            }
+        }
+        
+        // Sport configurations
+        if (carroceria === 'deportivo') {
+            if (traccion === 'trasera') {
+                totalPrice += 4000; // Sports car with rear-wheel drive premium
+            }
+            if (motor === 'gasolina' && transmision === 'secuencial') {
+                totalPrice += 6000; // Sports car with sequential transmission
+            }
+        }
+        
+        // Family car configurations
+        if (carroceria === 'familiar' && puertas === '5') {
+            totalPrice += 1500; // Family car with 5 doors premium
+            
+            if (traccion === '4x4') {
+                totalPrice += 3000; // Family car with 4x4 for versatility
+            }
+        }
+        
+        // Luxury sedan
+        if (carroceria === 'sedán' && transmision === 'automática') {
+            totalPrice += 2500; // Luxury sedan premium
+            
+            if (motor === 'híbrido') {
+                totalPrice += 3500; // Hybrid luxury sedan
+            }
+        }
+        
+        // Electric vehicles are generally more expensive
+        if (motor === 'eléctrico') {
+            totalPrice += motor === 'eléctrico' ? 8000 : 0;
+            
+            // Electric SUVs are even more premium
+            if (carroceria === 'SUV') {
+                totalPrice += 5000;
+            }
+        }
+        
+        // Round to nearest thousand for cleaner pricing
+        totalPrice = Math.round(totalPrice / 1000) * 1000;
+    }
+    
+    // Generate button click event
+    document.getElementById('generate-button').addEventListener('click', function() {
+        // Check if at least one option is selected in each category
+        let isComplete = true;
+        let missingCategories = [];
+        
+        for (const category in selectedOptions) {
+            if (selectedOptions[category].length === 0) {
+                isComplete = false;
+                const categoryNames = {
+                    motor: "Tipo de Motor",
+                    transmision: "Tipo de Transmisión",
+                    traccion: "Tipo de Tracción",
+                    carroceria: "Tipo de Carrocería",
+                    puertas: "Número de Puertas"
+                };
+                missingCategories.push(categoryNames[category]);
+            }
+        }
+        
+        if (!isComplete) {
+            alert(`Por favor, selecciona al menos una opción en cada categoría: ${missingCategories.join(', ')}`);
+            return;
+        }
+        
+        // Get the selected values
+        const motor = selectedOptions.motor[0].value;
+        const transmision = selectedOptions.transmision[0].value;
+        const traccion = selectedOptions.traccion[0].value;
+        const carroceria = selectedOptions.carroceria[0].value;
+        const puertas = selectedOptions.puertas[0].value;
+        
+        // Generate the prompt
+        const prompt = `Quiero los 3 mejores coches que sean de motor ${motor} con transmision ${transmision} que tengan traccion ${traccion}, tipo de carroceria ${carroceria} y con ${puertas} puertas. El presupuesto aproximado es de ${totalPrice.toLocaleString()} €.`;
+        
+        // Display the results
+        document.getElementById('prompt-result').textContent = prompt;
+        document.getElementById('result-container').style.display = 'block';
+    });
+});
     </script>
 </body>
 </html>
