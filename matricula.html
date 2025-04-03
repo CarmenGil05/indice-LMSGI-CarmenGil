@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrícula - Centro de Estudios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f7f5fb;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #5e35b1;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #444;
+        }
+        input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .subject-group {
+            border: 1px solid #e6e0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            background-color: #f9f7fe;
+        }
+        .subject-heading {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #5e35b1;
+        }
+        .subject-item {
+            margin-bottom: 10px;
+        }
+        .result-container {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f0e7ff;
+            border-left: 5px solid #7e57c2;
+        }
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #5e35b1;
+        }
+        .scholarship-price {
+            font-size: 20px;
+            color: #4a148c;
+            margin-top: 10px;
+        }
+        .error-message {
+            color: #e74c3c;
+            font-weight: bold;
+            padding: 15px;
+            background-color: #fdedeb;
+            border-left: 5px solid #e74c3c;
+            display: none;
+        }
+        button {
+            background-color: #7e57c2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #5e35b1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Formulario de Matrícula</h1>
+        
+        <div class="form-group">
+            <label>Horas semanales:</label>
+            <input type="number" id="hoursPerWeek" min="1" value="1" onchange="calculatePrice()">
+        </div>
+        
+        <div class="form-group">
+            <label><input type="checkbox" id="formerStudent" onchange="calculatePrice()"> Soy antiguo alumno (35% de descuento)</label>
+        </div>
+        
+        <div class="form-group">
+            <label><input type="checkbox" id="scholarship" onchange="calculatePrice()"> Solicito beca (Reducción al 20% del total)</label>
+        </div>
+        
+        <div class="subject-group">
+            <div class="subject-heading">Asignaturas de Primer Curso:</div>
+            <div class="subject-item">
+                <label><input type="checkbox" id="math1" onchange="calculatePrice()"> Matemáticas I</label>
+            </div>
+            <div class="subject-item">
+                <label><input type="checkbox" id="history" onchange="calculatePrice()"> Historia</label>
+            </div>
+        </div>
+        
+        <div class="subject-group">
+            <div class="subject-heading">Asignaturas de Segundo Curso:</div>
+            <div class="subject-item">
+                <label><input type="checkbox" id="math2" onchange="calculatePrice()"> Matemáticas II</label>
+            </div>
+            <div class="subject-item">
+                <label><input type="checkbox" id="physics" onchange="calculatePrice()"> Física</label>
+            </div>
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            ¡Error! No es posible matricularse en Matemáticas II sin estar matriculado en Matemáticas I.
+        </div>
+        
+        <div class="result-container" id="priceContainer">
+            <div>Precio mensual:</div>
+            <div class="price" id="totalPrice">0€</div>
+            <div id="scholarshipContainer" style="display: none">
+                <div>Precio con beca (20% del total):</div>
+                <div class="scholarship-price" id="scholarshipPrice">0€</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculatePrice() {
+            // Obtener valores del formulario
+            const hoursPerWeek = parseInt(document.getElementById('hoursPerWeek').value) || 0;
+            const isFormerStudent = document.getElementById('formerStudent').checked;
+            const hasScholarship = document.getElementById('scholarship').checked;
+            const math1Selected = document.getElementById('math1').checked;
+            const math2Selected = document.getElementById('math2').checked;
+            
+            // Comprobar la restricción de Matemáticas II sin Matemáticas I
+            const errorMessage = document.getElementById('errorMessage');
+            const priceContainer = document.getElementById('priceContainer');
+            
+            if (math2Selected && !math1Selected) {
+                errorMessage.style.display = 'block';
+                priceContainer.style.display = 'none';
+                return; // No continuar con el cálculo
+            } else {
+                errorMessage.style.display = 'none';
+                priceContainer.style.display = 'block';
+            }
+            
+            // Precio base: 20€ por hora semanal al mes
+            let basePrice = hoursPerWeek * 20;
+            
+            // Calcular el precio total (con descuento de antiguo alumno si aplica)
+            let totalPrice = isFormerStudent ? basePrice * 0.65 : basePrice;
+            
+            // Mostrar el precio total redondeado a 2 decimales
+            document.getElementById('totalPrice').textContent = totalPrice.toFixed(2) + '€';
+            
+            // Mostrar precio con beca si corresponde
+            const scholarshipContainer = document.getElementById('scholarshipContainer');
+            if (hasScholarship) {
+                scholarshipContainer.style.display = 'block';
+                const scholarshipPrice = totalPrice * 0.2; // 20% del precio total
+                document.getElementById('scholarshipPrice').textContent = scholarshipPrice.toFixed(2) + '€';
+            } else {
+                scholarshipContainer.style.display = 'none';
+            }
+        }
+        
+        // Calcular precio inicial al cargar la página
+        window.onload = calculatePrice;
+    </script>
+</body>
+</html>
