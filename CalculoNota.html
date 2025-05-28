@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Nota Real</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+      background-color: #f9f9f9;
+    }
+    h2 {
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    select, input, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      font-size: 1em;
+    }
+    #resultado {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #006400;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Calculadora de Nota Real del Examen</h2>
+
+  <label for="aciertos">Número de aciertos (0-27):</label>
+  <input type="number" id="aciertos" min="0" max="27">
+
+  <label for="penalizacion">Penalización por fallo:</label>
+  <select id="penalizacion">
+    <option value="0.0">Sin resta de fallos</option>
+    <option value="0.1">Cada fallo -0.1</option>
+    <option value="0.2">Cada fallo -0.2</option>
+    <option value="0.3">Cada fallo -0.3</option>
+  </select>
+
+  <button onclick="calcularNota()">Calcular Nota</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    function calcularNota() {
+      const aciertos = parseInt(document.getElementById('aciertos').value);
+      const penalizacionFallo = parseFloat(document.getElementById('penalizacion').value);
+
+      if (isNaN(aciertos) || aciertos < 0 || aciertos > 27) {
+        document.getElementById('resultado').textContent = "Introduce un número de aciertos válido (0-27).";
+        return;
+      }
+
+      const fallos = 27 - aciertos;
+      const valorAcierto = 10 / 27;
+      const notaSinPenalizar = aciertos * valorAcierto;
+      const penalizacionTotal = fallos * penalizacionFallo;
+      const notaReal = Math.max(0, (notaSinPenalizar - penalizacionTotal).toFixed(2));
+
+      document.getElementById('resultado').textContent = `Tu nota real es: ${notaReal}/10`;
+    }
+  </script>
+
+</body>
+</html>
